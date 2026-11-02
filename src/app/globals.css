@@ -1,21 +1,120 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --muted: #5f5f5f;
+  --paper: #f3f6f0;
+  --surface: #fbfcf9;
+  --ink: #15261f;
+  --muted: #52625a;
+  --line: #cdd6ca;
+  --msasa: #1e5b49;
+  --msasa-ink: #f3f6f0;
+  --ochre: #93590f;
+  --alert: #a3362a;
+  --alert-wash: #f8e7e2;
+  --note-wash: #e3eee6;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --muted: #a3a3a3;
+    --paper: #131d19;
+    --surface: #1a2622;
+    --ink: #e7ede8;
+    --muted: #a3b2aa;
+    --line: #36453e;
+    --msasa: #7cc4ab;
+    --msasa-ink: #0f1a16;
+    --ochre: #e0a65a;
+    --alert: #f0a091;
+    --alert-wash: #3a211c;
+    --note-wash: #20332b;
   }
 }
 
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-msasa: var(--msasa);
+  --color-msasa-ink: var(--msasa-ink);
+  --color-ochre: var(--ochre);
+  --color-alert: var(--alert);
+  --color-alert-wash: var(--alert-wash);
+  --color-note-wash: var(--note-wash);
+  --font-display: "Familjen Grotesk Variable", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible Next Variable", system-ui, sans-serif;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ochre);
+  outline-offset: 2px;
+}
+
+.field {
+  width: 100%;
+  border: 1px solid var(--muted);
+  border-radius: 3px;
+  background: var(--surface);
+  padding: 0.5rem 0.625rem;
+}
+
+.field[aria-invalid="true"] {
+  border-color: var(--alert);
+}
+
+.button {
+  display: inline-block;
+  border-radius: 3px;
+  background: var(--msasa);
+  color: var(--msasa-ink);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  filter: brightness(1.12);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.button-quiet {
+  display: inline-block;
+  border: 1px solid var(--muted);
+  border-radius: 3px;
+  padding: calc(0.5rem - 1px) 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button-quiet:hover {
+  background: var(--note-wash);
+}
+
+.text-link {
+  color: var(--msasa);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }

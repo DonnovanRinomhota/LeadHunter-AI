@@ -74,7 +74,7 @@ flowchart TD
 | Notifications | Telegram Bot API | Internal team alerts |
 | Hosting | Vercel + VPS for n8n | Web app and workflow runtime |
 
-The application skeleton is in place. See `docs/09-team-ownership-and-delivery-plan.md` for what is being built next.
+The application is in early build. See `docs/09-team-ownership-and-delivery-plan.md` for what is being built next.
 
 ## Repository structure
 
@@ -146,7 +146,7 @@ Facebook, Telegram, Reddit and LinkedIn are potential discovery channels, **not 
 
 ## Project status
 
-**Stage:** Application skeleton. No product features are implemented yet.
+**Stage:** Early build. Sign-in, lead intake and the lead list work locally. Scoring and outreach are not built yet.
 
 **Owner / initial deployment:** SpiritusTec internal use.
 

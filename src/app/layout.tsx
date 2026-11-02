@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import "@fontsource-variable/familjen-grotesk";
+import "@fontsource-variable/atkinson-hyperlegible-next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "LeadHunter AI",
+  title: { default: "LeadHunter AI", template: "%s | LeadHunter AI" },
   description: "Internal lead discovery and qualification tool.",
   robots: { index: false, follow: false },
 };
