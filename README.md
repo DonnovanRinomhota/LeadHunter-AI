@@ -1,5 +1,7 @@
 # LeadHunter AI
 
+> **Picking this up?** Start with the [team handover](docs/10-team-handover.md).
+
 **AI-powered lead discovery, qualification and acquisition platform for SpiritusTec.**
 
 LeadHunter AI is designed to discover publicly available business opportunities, understand the problem being expressed, match it to SpiritusTec's services, score its commercial relevance, prepare tailored outreach drafts, and track the journey from opportunity to client.
@@ -92,7 +94,8 @@ LeadHunter-AI/
 │   ├── 06-integrations-and-compliance.md
 │   ├── 07-api-contracts.md
 │   ├── 08-team-workflow.md
-│   └── 09-team-ownership-and-delivery-plan.md
+│   ├── 09-team-ownership-and-delivery-plan.md
+│   └── 10-team-handover.md
 ├── supabase/
 │   ├── README.md
 │   ├── config.toml
