@@ -1,0 +1,57 @@
+{
+  "name": "LeadHunter: Telegram connection test",
+  "nodes": [
+    {
+      "id": "22222222-0000-4000-8000-000000000001",
+      "name": "Run test",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "22222222-0000-4000-8000-000000000002",
+      "name": "Send test message",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "REPLACE-WITH-TEAM-CHAT-ID",
+        "text": "LeadHunter AI: Telegram connection works. No action needed.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "LeadHunter Telegram bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Run test": {
+      "main": [
+        [
+          {
+            "node": "Send test message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

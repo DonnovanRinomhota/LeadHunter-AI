@@ -68,8 +68,9 @@ Warsaw is 6 hours ahead of North Carolina all year. Pretoria is 1 hour ahead of 
 | GitHub Actions | Runs the app checks for free on this public repository | If the repository goes private, check the free allowance |
 | Supabase | Local development, then the Free plan with fake data | Pro is worth reviewing before the pilot, for daily backups and no pausing |
 | Vercel | Run locally for now, because Hobby is limited to non-commercial personal use | A deployed internal pilot needs a decision on Pro or another host |
+| Cloudflare Quick Tunnel | Lets n8n reach the local app during testing, with fake data only; the address changes each time | A deployed app replaces it |
 | Anthropic API | Build and test with fixtures | Live qualification (M3) needs API credit |
-| n8n | Use the existing instance if it costs nothing extra | Confirm what it runs on in M4 |
+| n8n | Use the company's existing paid account, with workflows prefixed `LeadHunter:` | No change expected |
 
 ## Permissions
 
@@ -252,8 +253,8 @@ These meet at the first working flow: a manual lead that is stored, scored and d
 - [ ] Choose hosting regions for Supabase, n8n and Vercel, considering latency and data protection rules.
 - [ ] Agree the weekly meeting time in the proposed shared window.
 - [ ] Decide which company name outreach uses. The docs and prompt say SpiritusTec; the public brand is Spiritus Agentic Solutions.
-- [ ] Decide how scoring treats a firm that fits the segment but shows no buying signal, because `docs/01-product-overview.md` requires evidence of a need.
-- [ ] Decide how scoring treats requests for services outside the three priorities.
+- [ ] Confirm the proposed rule for a firm that fits but shows no buying signal: record fit separately and use the `research` action, which allows no draft.
+- [ ] Decide how scoring treats requests for services outside the three priorities. `services.is_priority` is there to support this.
 - [ ] Agree each person's weekly hours, then add dates to the phases.
 - [ ] Confirm whether `001_initial_schema.sql` has been applied to the Supabase project.
 - [ ] Confirm the service catalogue against <https://spiritustec.com/>.

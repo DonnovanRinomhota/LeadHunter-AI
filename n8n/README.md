@@ -2,6 +2,20 @@
 
 n8n is the orchestration layer. Keep workflow exports free of credentials and secrets.
 
+Importable files are in `workflows/`. They arrive inactive and use a `LeadHunter:` prefix so they stay separate from other company workflows.
+
+| File | What it does | Needs the app running |
+|---|---|---|
+| `telegram-connection-test.json` | Sends one test message to the team chat | No |
+| `ingest-test-lead.json` | Signs and sends one made-up lead to the ingest API | Yes |
+
+Credentials are created by hand in n8n and never exported:
+
+| Credential | Type | Value |
+|---|---|---|
+| `LeadHunter Telegram bot` | Telegram API | The bot token |
+| `LeadHunter n8n to app` | Crypto, in the Hmac Secret field | The same value as `N8N_TO_APP_SECRET` |
+
 Recommended workflow order:
 1. Lead ingestion
 2. AI qualification

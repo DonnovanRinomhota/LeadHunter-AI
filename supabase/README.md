@@ -13,7 +13,7 @@ npm run db:test
 npm run db:stop
 ```
 
-`db:reset` rebuilds the local database from the migrations. `db:test` runs the tests in a transaction that is rolled back. CI runs them on every pull request too.
+`db:reset` rebuilds the local database from the migrations and loads `seed.sql`, which holds the local workspace and three priority services. `db:test` runs the tests in a transaction that is rolled back. CI runs them on every pull request too.
 
 ## How it fits together
 
@@ -22,6 +22,8 @@ npm run db:stop
 | `core_schema` | Tables, constraints and indexes |
 | `workflow_rules` | Triggers and the functions for lead moves, drafts, opt-outs and erasure |
 | `access_policies` | Grants and row level security |
+| `qualification_queue` | Fit assessment, and the functions n8n uses to claim leads |
+| `ingest_lead` | The single atomic path for incoming leads |
 
 ## Rules to build against
 
@@ -35,6 +37,9 @@ Status and draft changes go through these functions. Direct writes are refused, 
 | `approve_draft` | Members | Approves a draft in the caller's own name |
 | `reject_draft` | Members | Rejects a draft with a reason |
 | `mark_draft_sent` | Members | Records that a person sent the approved text; it sends nothing |
+| `ingest_lead` | Server | Stores a lead once, using its idempotency key, source record, URL or content |
+| `claim_leads_for_qualification` | Server | Hands out leads safely for qualification |
+| `record_qualification_failure` | Server | Returns a failed lead to new with its error |
 | `suppress_contact` | Owners and admins | Blocks a contact without needing a lead |
 | `erase_lead` | Owners and admins | Removes a lead and its history, keeping the suppression entry and an erasure record |
 
@@ -44,4 +49,4 @@ The server's calls use the secret key and have no signed-in user, so the server 
 
 - Contact hashes are unsalted SHA-256, so treat them as personal data.
 - Nothing yet deletes leads when `retain_until` passes, because the retention period needs legal advice.
-- The claim function for the n8n poller comes with the shared contracts.
+- A lead that uses up its qualification attempts stays in `new` with an error until a retry action is built.
