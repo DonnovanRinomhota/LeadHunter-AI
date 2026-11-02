@@ -1,0 +1,159 @@
+{
+  "name": "LeadHunter: Ingest test lead",
+  "nodes": [
+    {
+      "id": "11111111-0000-4000-8000-000000000001",
+      "name": "Run test",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "11111111-0000-4000-8000-000000000002",
+      "name": "Settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "app-url",
+              "name": "appUrl",
+              "value": "https://REPLACE-ME.trycloudflare.com",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "11111111-0000-4000-8000-000000000003",
+      "name": "Build test lead",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "// Sends one made-up lead. A new key each run means each run creates a new lead.\nconst runId = Date.now();\nconst lead = {\n  idempotencyKey: `n8n-test:${runId}`,\n  sourceType: 'n8n_test',\n  sourceConfigId: null,\n  sourceRecordId: `test-${runId}`,\n  sourceUrl: null,\n  authorHandle: null,\n  organisationName: 'Example Consulting (test)',\n  countryCode: 'ZW',\n  contactChannel: null,\n  contactValue: null,\n  originalContent: `Test lead ${runId}: we want to automate our monthly client reporting.`,\n  publishedAt: new Date(runId).toISOString(),\n};\nconst rawBody = JSON.stringify(lead);\nconst timestamp = Math.floor(runId / 1000);\nreturn [{ json: { rawBody, timestamp, signingInput: `${timestamp}.${rawBody}` } }];"
+      }
+    },
+    {
+      "id": "11111111-0000-4000-8000-000000000004",
+      "name": "Sign request",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "binaryData": false,
+        "value": "={{ $json.signingInput }}",
+        "dataPropertyName": "signature",
+        "encoding": "hex"
+      },
+      "credentials": {
+        "crypto": {
+          "name": "LeadHunter n8n to app"
+        }
+      }
+    },
+    {
+      "id": "11111111-0000-4000-8000-000000000005",
+      "name": "Send to LeadHunter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Settings').first().json.appUrl }}/api/internal/leads",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-leadhunter-timestamp",
+              "value": "={{ String($('Build test lead').first().json.timestamp) }}"
+            },
+            {
+              "name": "x-leadhunter-signature",
+              "value": "={{ $json.signature }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $('Build test lead').first().json.rawBody }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Run test": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Settings": {
+      "main": [
+        [
+          {
+            "node": "Build test lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build test lead": {
+      "main": [
+        [
+          {
+            "node": "Sign request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sign request": {
+      "main": [
+        [
+          {
+            "node": "Send to LeadHunter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

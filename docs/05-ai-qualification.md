@@ -1,5 +1,7 @@
 # 5. AI qualification and scoring
 
+The enforced output format is `qualificationOutputSchema` in `src/contracts/qualification.ts`. Code calculates recency and the total, so the model does not return them. The JSON below is the earlier illustration.
+
 ## Required structured output
 
 The model should return JSON matching the application's schema:
