@@ -27,7 +27,11 @@ const PROFILE = {
   target_geographies: ["ZW", "ZA"],
   target_industries: ["consultancies", "accounting firms", "business services"],
   excluded_segments: [],
-  ideal_customer_profile: {},
+  ideal_customer_profile: {
+    segment: "Mid-sized professional services firms",
+    staff_min: 20,
+    staff_max: 200,
+  },
 };
 
 const REQUIRED_AGREEMENT = 0.8;

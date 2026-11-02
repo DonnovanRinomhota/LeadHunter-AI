@@ -66,6 +66,7 @@ $$, $$values
   ('claim_leads_for_qualification(integer,interval,integer)'),
   ('create_outreach_draft(uuid,uuid,text,text,text)'),
   ('ingest_lead(uuid,text,text,uuid,text,text,text,text,text,text,text,text,text,text,timestamp with time zone)'),
+  ('list_leads_ready_for_draft(integer)'),
   ('record_qualification_failure(uuid,text)'),
   ('transition_lead(uuid,text,text,numeric,text)')
 $$, 'the server can call only the intended functions');

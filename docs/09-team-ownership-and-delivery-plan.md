@@ -37,16 +37,18 @@ Warsaw is 6 hours ahead of North Carolina all year. Pretoria is 1 hour ahead of 
 | 2 | Where the Claude call lives | One typed module in the Next.js app, triggered by n8n | Agreed |
 | 3 | How n8n writes data | Through a signed internal API; n8n holds no Supabase secret | Agreed |
 | 4 | First automated source | Manual entry and CSV come first; choose the connector after the permission review (M8) | Agreed; connector open |
-| 5 | First segment and services | See "Target market" below | Agreed; "mid-sized" still to be defined |
+| 5 | First segment and services | See "Target market" below | Agreed |
 | 6 | Definition of `qualified` | Score of 60 or higher with no disqualifier; calibrate on the evaluation set | Agreed |
 | 7 | Legal entity and jurisdictions | Target countries are set. Public brand is Spiritus Agentic Solutions; confirm the registered entity and country of incorporation, then take legal advice | **Open: entity and advice needed** |
 | 8 | Who may approve outreach | Everyone on the team | Agreed |
 | 9 | Spending | No paid services for now; see "Working without paid services" | Agreed |
 | 10 | Running SQL | Donnovan reviews and runs all SQL first | Agreed |
+| 11 | Outreach name | Messages come from Spiritus Agentic Solutions | Agreed |
+| 12 | Good fit with no buying signal | Record fit separately and use a Research status, with no draft | Agreed |
 
 ### Target market
 
-- **Segment:** mid-sized professional services firms, including consultancies, accounting firms and business services companies.
+- **Segment:** mid-sized professional services firms of 20 to 200 staff, including consultancies, accounting firms and business services companies.
 - **Geography:** Zimbabwe and South Africa first, with Zambia and Botswana planned for later.
 - **Priority services:** Agentic Workflows, Automation & Integration, and AI Knowledge Operations.
 - **Value focus:** reducing repetitive administrative work, streamlining processes, connecting existing systems and improving access to business information.
@@ -248,12 +250,9 @@ These meet at the first working flow: a manual lead that is stored, scored and d
 
 ## Open items
 
-- [ ] Decision 5: define "mid-sized" so the evaluation set and scoring can apply it consistently.
 - [ ] Decision 7: confirm the registered legal entity and country of incorporation, then take advice covering Zimbabwe and South Africa, and how a team in Poland, South Africa and the USA affects which laws apply.
 - [ ] Choose hosting regions for Supabase, n8n and Vercel, considering latency and data protection rules.
 - [ ] Agree the weekly meeting time in the proposed shared window.
-- [ ] Decide which company name outreach uses. The docs and prompt say SpiritusTec; the public brand is Spiritus Agentic Solutions.
-- [ ] Confirm the proposed rule for a firm that fits but shows no buying signal: record fit separately and use the `research` action, which allows no draft.
 - [ ] Decide how scoring treats requests for services outside the three priorities. `services.is_priority` is there to support this.
 - [ ] Agree each person's weekly hours, then add dates to the phases.
 - [ ] Confirm whether `001_initial_schema.sql` has been applied to the Supabase project.
