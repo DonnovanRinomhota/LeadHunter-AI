@@ -93,10 +93,11 @@ LeadHunter-AI/
 │   ├── 07-api-contracts.md
 │   ├── 08-team-workflow.md
 │   └── 09-team-ownership-and-delivery-plan.md
-├── database/
+├── supabase/
 │   ├── README.md
-│   └── migrations/
-│       └── 001_initial_schema.sql
+│   ├── config.toml
+│   ├── migrations/
+│   └── tests/
 ├── n8n/
 │   ├── README.md
 │   └── workflow-specifications/
@@ -128,7 +129,7 @@ The app runs at <http://localhost:3000>. Run `npm run check` before opening a pu
 
 1. Review `docs/01-product-overview.md` and agree on the first target customer segment.
 2. Confirm SpiritusTec's service descriptions, capability boundaries and minimum engagement values.
-3. Create a Supabase project and apply `database/migrations/001_initial_schema.sql`.
+3. Follow `supabase/README.md` to run and test the schema locally.
 4. Set up n8n and configure credentials as environment secrets.
 5. Implement the first permitted source connector and manual lead submission.
 6. Build the review dashboard and human approval workflow.

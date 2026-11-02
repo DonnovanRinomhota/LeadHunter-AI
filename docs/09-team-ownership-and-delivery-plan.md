@@ -41,6 +41,8 @@ Warsaw is 6 hours ahead of North Carolina all year. Pretoria is 1 hour ahead of 
 | 6 | Definition of `qualified` | Score of 60 or higher with no disqualifier; calibrate on the evaluation set | Agreed |
 | 7 | Legal entity and jurisdictions | Target countries are set. Public brand is Spiritus Agentic Solutions; confirm the registered entity and country of incorporation, then take legal advice | **Open: entity and advice needed** |
 | 8 | Who may approve outreach | Everyone on the team | Agreed |
+| 9 | Spending | No paid services for now; see "Working without paid services" | Agreed |
+| 10 | Running SQL | Donnovan reviews and runs all SQL first | Agreed |
 
 ### Target market
 
@@ -58,6 +60,16 @@ Warsaw is 6 hours ahead of North Carolina all year. Pretoria is 1 hour ahead of 
 - The database records who approved each draft, keeps the AI's original text and locks approved text.
 - The `reviewer` role is no longer needed for the MVP. Remove it when the schema is corrected unless the team finds another use for it.
 - Revisit this decision if anyone outside the core team joins the workspace.
+
+### Working without paid services
+
+| Service | Approach for now | When this changes |
+|---|---|---|
+| GitHub Actions | Runs the app checks for free on this public repository | If the repository goes private, check the free allowance |
+| Supabase | Local development, then the Free plan with fake data | Pro is worth reviewing before the pilot, for daily backups and no pausing |
+| Vercel | Run locally for now, because Hobby is limited to non-commercial personal use | A deployed internal pilot needs a decision on Pro or another host |
+| Anthropic API | Build and test with fixtures | Live qualification (M3) needs API credit |
+| n8n | Use the existing instance if it costs nothing extra | Confirm what it runs on in M4 |
 
 ## Permissions
 
@@ -147,7 +159,7 @@ flowchart TD
 
 | ID | Task | Acceptance criteria | Depends on |
 |---|---|---|---|
-| D1 | Scaffold Next.js, TypeScript and Tailwind, with CI | Lint, type check and tests run on each PR, with a Vercel preview | None |
+| D1 | Scaffold Next.js, TypeScript and Tailwind, with CI | Lint, type check and tests run on each PR; Vercel previews are deferred | None |
 | D2 | Authentication | Invite only; signed-out users are redirected; non-members are refused on the server | D1, J5 |
 | D3 | Manual lead form and CSV import | Both call `ingestLead()`; a duplicate shows the existing lead; bad rows are reported by line | D2, J6 |
 | D4 | Lead list | Filter by status, score, source and service; paginated | D2, S2 |
@@ -172,48 +184,48 @@ flowchart TD
 
 ## Schema corrections
 
-`database/migrations/001_initial_schema.sql` must not be applied until J2 and J3 are complete. If it has already been applied anywhere, make these changes in a new migration instead of rewriting it.
+These are done in `supabase/migrations/`, which replaces the original `001_initial_schema.sql`, and `supabase/tests/database/rules.test.sql` covers the main rules. Donnovan reviews and runs them first, and Jerome reviews the PR, before anything reaches a hosted project.
 
 **Access and bootstrap**
 
-- [ ] Replace open workspace creation with a trusted seed, and turn off public signup.
-- [ ] Replace "any member can do anything" policies with the permissions table above.
-- [ ] Only owners manage owners, and the last owner cannot be removed.
-- [ ] Let members read the profiles of people in their workspaces.
-- [ ] Move helper functions out of the exposed schema, and revoke execution from `public` and `anon`.
-- [ ] Use `(select auth.uid())` and `to authenticated` in policies.
+- [x] Replace open workspace creation with a trusted seed, and turn off public signup.
+- [x] Replace "any member can do anything" policies with the permissions table above.
+- [x] Only owners manage owners, and the last owner cannot be removed.
+- [x] Let members read the profiles of people in their workspaces.
+- [x] Move helper functions out of the exposed schema, and revoke execution from `public` and `anon`.
+- [x] Use `(select auth.uid())` and `to authenticated` in policies.
 
 **Approval and audit**
 
-- [ ] Approve through a function that takes the approver from `auth.uid()`, and refuse any other route to `approved`.
-- [ ] Lock approved text; a change returns the draft to pending.
-- [ ] Enforce lead transitions with a trigger that writes `pipeline_events`.
-- [ ] Make `pipeline_events` and `contact_events` append-only, with the author set by the database.
+- [x] Approve through a function that takes the approver from `auth.uid()`, and refuse any other route to `approved`.
+- [x] Lock approved text; a change returns the draft to pending.
+- [x] Enforce lead transitions with a trigger that writes `pipeline_events`.
+- [x] Make `pipeline_events` and `contact_events` append-only, with the author set by the database.
 
 **Integrity**
 
-- [ ] Remove the `where` clause from `leads_source_record_unique` so `on conflict` works. Null record IDs are still allowed.
-- [ ] Add `canonical_url`, and prevent duplicates for records without a source ID.
-- [ ] Use composite foreign keys so child records cannot point at another workspace's lead.
-- [ ] Require `permission_reference` before a source can be enabled.
-- [ ] Default new services to `developing` instead of `confirmed`.
-- [ ] Check the range of each score criterion, and let only the server write analyses.
-- [ ] Maintain `updated_at` with a trigger, and index `workspace_id` and `lead_id` foreign keys.
+- [x] Remove the `where` clause from `leads_source_record_unique` so `on conflict` works. Null record IDs are still allowed.
+- [x] Add `canonical_url`, and prevent duplicates for records without a source ID.
+- [x] Use composite foreign keys so child records cannot point at another workspace's lead.
+- [x] Require `permission_reference` before a source can be enabled.
+- [x] Default new services to `developing` instead of `confirmed`.
+- [x] Check the range of each score criterion, and let only the server write analyses.
+- [x] Maintain `updated_at` with a trigger, and index `workspace_id` and `lead_id` foreign keys.
 
 **Data protection**
 
-- [ ] Add a `suppression_list` with a hashed identifier that survives lead deletion.
-- [ ] Add an audited erase function for leads.
-- [ ] Make `workspaces.created_by` nullable with `on delete set null`, so user deletion is not blocked.
-- [ ] Add a retention date to leads.
+- [x] Add a `suppression_list` with a hashed identifier that survives lead deletion.
+- [x] Add an audited erase function for leads.
+- [x] Make `workspaces.created_by` nullable with `on delete set null`, so user deletion is not blocked.
+- [x] Add a retention date to leads.
 
 **Missing fields**
 
-- [ ] `leads`: country or region, contact channel or identifier, `next_action_at`, qualification attempts and last error.
-- [ ] `lead_analyses`: confidence, buying intent, urgency, budget, requirements and token usage.
-- [ ] `outreach_drafts`: the AI's original text, source analysis, prompt version and rejection reason.
-- [ ] Service matches reference `services.id` instead of free text.
-- [ ] An ingestion idempotency record.
+- [x] `leads`: country or region, contact channel or identifier, `next_action_at`, qualification attempts and last error.
+- [x] `lead_analyses`: confidence, buying intent, urgency, budget, requirements and token usage.
+- [x] `outreach_drafts`: the AI's original text, source analysis, prompt version and rejection reason.
+- [x] Service matches reference `services.id` instead of free text.
+- [x] An ingestion idempotency record.
 
 ## Working agreement
 

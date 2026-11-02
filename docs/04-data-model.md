@@ -1,6 +1,6 @@
 # 4. Data model
 
-The initial SQL migration is in `database/migrations/001_initial_schema.sql`.
+The SQL migrations are in `supabase/migrations/`, and `supabase/README.md` explains how to run them.
 
 ## Core entities
 
@@ -18,6 +18,10 @@ The initial SQL migration is in `database/migrations/001_initial_schema.sql`.
 | `contact_events` | Contact and response history |
 | `pipeline_events` | Meeting, proposal, won/lost history |
 | `automation_runs` | Workflow execution audit metadata |
+| `lead_analysis_services` | Which services each analysis matched, with evidence |
+| `suppression_list` | Contacts who must not be contacted, kept after a lead is erased |
+| `data_erasures` | Record that a lead was erased |
+| `ingestion_records` | Idempotency keys for lead ingestion |
 
 ## Lead lifecycle
 
