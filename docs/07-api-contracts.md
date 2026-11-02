@@ -16,6 +16,7 @@ These are implementation contracts, not deployed endpoints yet.
 | GET/POST | `/api/services` | List / configure services |
 | GET/POST | `/api/sources` | List / configure permitted sources |
 | POST | `/api/internal/leads` | Ingest a lead from a signed n8n request (implemented) |
+| POST | `/api/internal/qualify` | Score queued leads from a signed n8n request (implemented) |
 | GET | `/api/analytics/summary` | Pipeline and conversion metrics |
 
 ## Shared contracts
