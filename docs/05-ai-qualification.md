@@ -66,6 +66,14 @@ A missing budget is **unknown**, not zero evidence of ability to pay. The score 
 - Draft a respectful, specific message without pretending SpiritusTec has a relationship or experience it has not confirmed.
 - Return structured JSON and validate it before persistence.
 
+## Status rules in version 1
+
+- A disqualifier, a `reject` action or no business opportunity moves a lead to `disqualified`.
+- A score under 60 also moves a lead to `disqualified`, with the score as the reason. A person can overrule it.
+- A `research` action with a good or possible fit moves to `research`, which keeps the firm visible without a draft.
+- Anything else moves to `qualified`. Only `review` allows a draft.
+- No budget evidence scores 0 of 10, so the best possible score without a budget is 90. Review this after the first live evaluation.
+
 ## Human decision
 
 AI scores are prioritisation aids, not decisions. The team remains responsible for qualification, outreach, compliance and commercial judgement.

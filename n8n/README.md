@@ -8,6 +8,7 @@ Importable files are in `workflows/`. They arrive inactive and use a `LeadHunter
 |---|---|---|
 | `telegram-connection-test.json` | Sends one test message to the team chat | No |
 | `ingest-test-lead.json` | Signs and sends one made-up lead to the ingest API | Yes |
+| `score-queued-leads.json` | Asks the app to score up to 5 queued leads. It only spends money if the app is in live mode | Yes |
 
 Credentials are created by hand in n8n and never exported:
 

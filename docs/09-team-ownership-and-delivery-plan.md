@@ -69,7 +69,7 @@ Warsaw is 6 hours ahead of North Carolina all year. Pretoria is 1 hour ahead of 
 | Supabase | Local development, then the Free plan with fake data | Pro is worth reviewing before the pilot, for daily backups and no pausing |
 | Vercel | Run locally for now, because Hobby is limited to non-commercial personal use | A deployed internal pilot needs a decision on Pro or another host |
 | Cloudflare Quick Tunnel | Lets n8n reach the local app during testing, with fake data only; the address changes each time | A deployed app replaces it |
-| Anthropic API | Build and test with fixtures | Live qualification (M3) needs API credit |
+| Anthropic API | Off by default. Sample mode tests the flow for free using keyword rules | `QUALIFICATION_MODE=live` needs API credit; `QUALIFICATION_DAILY_LIMIT` caps each day's scoring |
 | n8n | Use the company's existing paid account, with workflows prefixed `LeadHunter:` | No change expected |
 
 ## Permissions

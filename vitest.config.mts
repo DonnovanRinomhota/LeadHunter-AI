@@ -1,12 +1,19 @@
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
-export default defineConfig({
+const path = (relative: string) => fileURLToPath(new URL(relative, import.meta.url));
+
+export default defineConfig(({ mode }) => ({
   resolve: {
-    alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
+    alias: {
+      "@": path("./src"),
+      "server-only": path("./evals/server-only-stub.ts"),
+    },
   },
   test: {
     environment: "node",
-    include: ["src/**/*.test.ts"],
+    // npm run eval:live is the only run that uses the live folder, because it costs money.
+    include: mode === "live" ? ["evals/**/*.test.ts"] : ["src/**/*.test.ts"],
+    testTimeout: mode === "live" ? 600_000 : 5_000,
   },
-});
+}));

@@ -4,6 +4,7 @@ export const STATUS_LABELS: Record<LeadStatus, string> = {
   new: "New",
   qualifying: "Being scored",
   qualified: "Qualified",
+  research: "Research",
   disqualified: "Disqualified",
   draft_ready: "Draft ready",
   approved: "Approved",

@@ -149,7 +149,7 @@ describe("n8n workflow files", () => {
     expect(item.json.signingInput).toBe(`${item.json.timestamp}.${item.json.rawBody}`);
   });
 
-  it.each(["ingest-test-lead.json", "telegram-connection-test.json"])(
+  it.each(["ingest-test-lead.json", "telegram-connection-test.json", "score-queued-leads.json"])(
     "%s connects every node and holds no secrets",
     (name) => {
       const workflow = load(name);

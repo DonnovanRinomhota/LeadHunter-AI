@@ -1,6 +1,6 @@
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(16);
+select plan(18);
 
 insert into auth.users (id, email) values ('00000000-0000-0000-0000-00000000000b', 'member@example.test');
 insert into public.workspaces (id, name, slug) values ('aaaaaaaa-0000-0000-0000-000000000001', 'A', 'a');
@@ -42,6 +42,10 @@ select is((select fit_assessment from public.leads where id = 'aaaaaaaa-0000-000
 select is((select buying_intent from public.leads where id = 'aaaaaaaa-0000-0000-0000-0000000000a1'), 'low', 'buying intent is recorded separately');
 select lives_ok($$select public.transition_lead('aaaaaaaa-0000-0000-0000-0000000000a1', 'qualified')$$, 'a strong fit can still qualify');
 select throws_ok($$select public.create_outreach_draft('aaaaaaaa-0000-0000-0000-0000000000a1', 'aaaaaaaa-0000-0000-0000-0000000000c1', 'email', 'hello', 'v1')$$, 'P0001', null, 'a research result cannot get a draft');
+
+-- The research status keeps it visible, and a person can promote it.
+select lives_ok($$select public.transition_lead('aaaaaaaa-0000-0000-0000-0000000000a2', 'research', 'Good fit with no buying signal yet')$$, 'the server can file a lead under research');
+select throws_ok($$select public.transition_lead('aaaaaaaa-0000-0000-0000-0000000000a2', 'qualified')$$, '42501', null, 'only a person can promote a research lead');
 
 select * from finish();
 rollback;
