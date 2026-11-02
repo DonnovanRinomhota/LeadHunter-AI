@@ -13,10 +13,10 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "check": "npm run lint && npm run typecheck && npm test && npm run build",
-    "db:start": "npx --yes supabase@3.0.0 start",
-    "db:stop": "npx --yes supabase@3.0.0 stop",
-    "db:reset": "npx --yes supabase@3.0.0 db reset",
-    "db:test": "npx --yes supabase@3.0.0 test db"
+    "db:start": "npx --yes supabase@2.122.1 start",
+    "db:stop": "npx --yes supabase@2.122.1 stop",
+    "db:reset": "npx --yes supabase@2.122.1 db reset",
+    "db:test": "npx --yes supabase@2.122.1 test db"
   },
   "dependencies": {
     "next": "16.4.4",
