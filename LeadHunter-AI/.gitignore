@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Logs and local data
+*.log
+.DS_Store
+*.sqlite
+*.db
+
+# Editors
+.vscode/
+.idea/
+
+# Test / coverage
+coverage/
+playwright-report/
+test-results/
