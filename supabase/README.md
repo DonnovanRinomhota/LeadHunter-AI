@@ -13,7 +13,7 @@ npm run db:test
 npm run db:stop
 ```
 
-`db:reset` rebuilds the local database from the migrations and loads `seed.sql`, which holds the local workspace and three priority services. `db:test` runs the tests in a transaction that is rolled back. CI runs them on every pull request too.
+`db:reset` rebuilds the local database from the migrations and loads `seed.sql`, which holds the local workspace and three priority services. To sign in locally, run `npm run dev:user -- you@example.com` once after each reset. `db:test` runs the tests in a transaction that is rolled back. CI runs them on every pull request too.
 
 ## How it fits together
 
@@ -24,6 +24,7 @@ npm run db:stop
 | `access_policies` | Grants and row level security |
 | `qualification_queue` | Fit assessment, and the functions n8n uses to claim leads |
 | `ingest_lead` | The single atomic path for incoming leads |
+| `lead_screens` | Lets members add leads, and keeps service matches ready for filtering |
 
 ## Rules to build against
 
@@ -37,7 +38,7 @@ Status and draft changes go through these functions. Direct writes are refused, 
 | `approve_draft` | Members | Approves a draft in the caller's own name |
 | `reject_draft` | Members | Rejects a draft with a reason |
 | `mark_draft_sent` | Members | Records that a person sent the approved text; it sends nothing |
-| `ingest_lead` | Server | Stores a lead once, using its idempotency key, source record, URL or content |
+| `ingest_lead` | Members and server | Stores a lead once, using its idempotency key, source record, URL or content |
 | `claim_leads_for_qualification` | Server | Hands out leads safely for qualification |
 | `record_qualification_failure` | Server | Returns a failed lead to new with its error |
 | `suppress_contact` | Owners and admins | Blocks a contact without needing a lead |

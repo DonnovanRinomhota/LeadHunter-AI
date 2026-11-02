@@ -51,6 +51,7 @@ $$, $$values
   ('approve_draft(uuid)'),
   ('edit_draft(uuid,text)'),
   ('erase_lead(uuid,text)'),
+  ('ingest_lead(uuid,text,text,uuid,text,text,text,text,text,text,text,text,text,text,timestamp with time zone)'),
   ('mark_draft_sent(uuid)'),
   ('reject_draft(uuid,text)'),
   ('suppress_contact(uuid,text,text)'),

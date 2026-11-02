@@ -4,8 +4,8 @@ These are implementation contracts, not deployed endpoints yet.
 
 | Method | Route | Purpose |
 |---|---|---|
-| GET | `/api/leads` | List workspace leads with filters / pagination |
-| POST | `/api/leads` | Create a manual lead |
+| GET | `/leads` | Lead list with filters and pagination (implemented as a page) |
+| POST | Server actions | Sign-in, manual lead and CSV import (implemented) |
 | GET | `/api/leads/:id` | Fetch lead, analyses and drafts |
 | POST | `/api/leads/:id/qualify` | Request AI qualification |
 | POST | `/api/leads/:id/drafts` | Generate an outreach draft |
