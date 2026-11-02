@@ -24,6 +24,7 @@ npm run db:stop
 | `access_policies` | Grants and row level security |
 | `qualification_queue` | Fit assessment, and the functions n8n uses to claim leads |
 | `ingest_lead` | The single atomic path for incoming leads |
+| `draft_queue` | Lists qualified leads ready for a first draft |
 | `lead_screens` | Lets members add leads, and keeps service matches ready for filtering |
 
 ## Rules to build against
@@ -39,6 +40,7 @@ Status and draft changes go through these functions. Direct writes are refused, 
 | `reject_draft` | Members | Rejects a draft with a reason |
 | `mark_draft_sent` | Members | Records that a person sent the approved text; it sends nothing |
 | `ingest_lead` | Members and server | Stores a lead once, using its idempotency key, source record, URL or content |
+| `list_leads_ready_for_draft` | Server | Lists leads that should get a first draft |
 | `claim_leads_for_qualification` | Server | Hands out leads safely for qualification |
 | `record_qualification_failure` | Server | Returns a failed lead to new with its error |
 | `suppress_contact` | Owners and admins | Blocks a contact without needing a lead |

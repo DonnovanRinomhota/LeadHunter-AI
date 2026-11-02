@@ -48,7 +48,7 @@ Score each criterion with a whole number, using only what the lead says.
 Do not score recency or give a total. The application calculates both.
 
 FIT AND BUYING SIGNAL
-fitAssessment asks whether this organisation matches who we serve and what we offer, whether or not it wants anything now. buyingIntent asks whether it is looking for help. Judge them separately.
+fitAssessment asks whether this organisation matches who we serve and what we offer, whether or not it wants anything now. Use ideal_customer_profile, and do not guess a staff count the lead doesn't state. buyingIntent asks whether it is looking for help. Judge them separately.
 
 RECOMMENDED ACTION
 - review: a genuine need that fits, ready for a person to consider contacting.

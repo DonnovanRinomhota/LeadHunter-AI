@@ -1,10 +1,11 @@
-// Scores queued leads on your local app, without n8n or the tunnel.
-// Usage: npm run dev:score
+// Calls a signed internal route on your local app, without n8n or the tunnel.
+// Usage: npm run dev:score   or   npm run dev:drafts
 import { createHmac } from "node:crypto";
 
+const path = process.argv[2];
 const secret = process.env.N8N_TO_APP_SECRET;
-if (!secret) {
-  console.error("N8N_TO_APP_SECRET must be in .env.local.");
+if (!path || !secret) {
+  console.error("N8N_TO_APP_SECRET must be in .env.local, and a route is required.");
   process.exit(1);
 }
 
@@ -12,7 +13,7 @@ const body = JSON.stringify({ limit: 5 });
 const timestamp = Math.floor(Date.now() / 1000);
 const signature = createHmac("sha256", secret).update(`${timestamp}.${body}`).digest("hex");
 
-const response = await fetch("http://localhost:3000/api/internal/qualify", {
+const response = await fetch(`http://localhost:3000${path}`, {
   method: "POST",
   body,
   headers: {

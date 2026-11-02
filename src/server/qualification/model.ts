@@ -1,5 +1,6 @@
 import "server-only";
 import Anthropic from "@anthropic-ai/sdk";
+import { createSampleDraftModel } from "../drafts/sample-model";
 import { createSampleModel } from "./sample-model";
 import type { ModelClient } from "./types";
 
@@ -43,4 +44,11 @@ export function resolveModel(env: Record<string, string | undefined>): ModelClie
     return createClaudeModel(env.ANTHROPIC_API_KEY, env.ANTHROPIC_MODEL);
   }
   return null;
+}
+
+export function resolveDraftModel(env: Record<string, string | undefined>): ModelClient | null {
+  if (env.QUALIFICATION_MODE === "sample") {
+    return isLocal(env.NEXT_PUBLIC_SUPABASE_URL) ? createSampleDraftModel() : null;
+  }
+  return resolveModel(env);
 }

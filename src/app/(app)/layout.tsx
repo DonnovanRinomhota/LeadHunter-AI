@@ -20,6 +20,9 @@ export default function AppLayout({ children }: LayoutProps<"/">) {
             <Link href="/leads" className="underline-offset-4 hover:underline">
               Leads
             </Link>
+            <Link href="/drafts" className="underline-offset-4 hover:underline">
+              Drafts
+            </Link>
             <Link href="/leads/new" className="underline-offset-4 hover:underline">
               Add a lead
             </Link>

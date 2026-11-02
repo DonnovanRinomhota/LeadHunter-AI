@@ -3,7 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { z } from "zod";
+import { DraftReview, OptOutButton } from "@/components/draft-review";
 import { ScoreTrack } from "@/components/score-track";
+import { findDraftFlags } from "@/lib/draft-flags";
 import type { LeadStatus } from "@/contracts/lead-state";
 import { formatDate, safeWebUrl, STATUS_LABELS } from "@/lib/lead-labels";
 import { createSessionClient, getCurrentMember } from "@/server/session";
@@ -166,6 +168,21 @@ async function LeadDetail({ params, searchParams }: Pick<Props, "params" | "sear
   if (!lead) notFound();
 
   const sourceUrl = safeWebUrl(lead.source_url);
+  const { data: draft } = await supabase
+    .from("outreach_drafts")
+    .select("id, status, channel, message, prompt_version, approved_by, rejection_reason")
+    .eq("lead_id", id)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const { data: approver } = draft?.approved_by
+    ? await supabase.from("profiles").select("display_name").eq("id", draft.approved_by).maybeSingle()
+    : { data: null };
+  const { data: profile } = await supabase
+    .from("business_profiles")
+    .select("website_url")
+    .eq("workspace_id", member.workspaceId)
+    .maybeSingle();
   const { data: analysis } = await supabase
     .from("lead_analyses")
     .select(
@@ -199,7 +216,7 @@ async function LeadDetail({ params, searchParams }: Pick<Props, "params" | "sear
       ) : null}
       {lead.qualification_last_error ? (
         <p role="alert" className="mt-4 rounded-sm bg-alert-wash p-3 text-alert">
-          Scoring failed: {lead.qualification_last_error}
+          Last problem: {lead.qualification_last_error}
         </p>
       ) : null}
 
@@ -215,6 +232,25 @@ async function LeadDetail({ params, searchParams }: Pick<Props, "params" | "sear
           ) : (
             <p className="mt-8 text-muted">This lead hasn&apos;t been assessed yet.</p>
           )}
+          {draft ? (
+            <section className="mt-8">
+              <h2 className="text-2xl">Outreach draft</h2>
+              <DraftReview
+                draft={{
+                  id: draft.id,
+                  leadId: lead.id,
+                  status: draft.status,
+                  channel: draft.channel,
+                  message: draft.message,
+                  isSample: draft.prompt_version.startsWith("sample:"),
+                  approverEmail: draft.approved_by === member.userId ? member.email : (approver?.display_name ?? null),
+                  rejectionReason: draft.rejection_reason,
+                }}
+                flags={findDraftFlags(draft.message, [profile?.website_url ?? null, lead.source_url])}
+              />
+            </section>
+          ) : null}
+          <OptOutButton leadId={lead.id} />
         </section>
         <section>
           <h2 className="text-2xl">Score</h2>
