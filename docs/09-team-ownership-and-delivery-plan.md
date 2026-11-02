@@ -252,8 +252,8 @@ These meet at the first working flow: a manual lead that is stored, scored and d
 - [ ] Choose hosting regions for Supabase, n8n and Vercel, considering latency and data protection rules.
 - [ ] Agree the weekly meeting time in the proposed shared window.
 - [ ] Decide which company name outreach uses. The docs and prompt say SpiritusTec; the public brand is Spiritus Agentic Solutions.
-- [ ] Decide how scoring treats a firm that fits the segment but shows no buying signal, because `docs/01-product-overview.md` requires evidence of a need.
-- [ ] Decide how scoring treats requests for services outside the three priorities.
+- [ ] Confirm the proposed rule for a firm that fits but shows no buying signal: record fit separately and use the `research` action, which allows no draft.
+- [ ] Decide how scoring treats requests for services outside the three priorities. `services.is_priority` is there to support this.
 - [ ] Agree each person's weekly hours, then add dates to the phases.
 - [ ] Confirm whether `001_initial_schema.sql` has been applied to the Supabase project.
 - [ ] Confirm the service catalogue against <https://spiritustec.com/>.

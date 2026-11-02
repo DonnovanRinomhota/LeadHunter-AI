@@ -62,7 +62,9 @@ select results_eq($$
   where p.pronamespace = 'public'::regnamespace
     and has_function_privilege('service_role', p.oid, 'execute') order by p.oid::regprocedure::text collate "C"
 $$, $$values
+  ('claim_leads_for_qualification(integer,interval,integer)'),
   ('create_outreach_draft(uuid,uuid,text,text,text)'),
+  ('record_qualification_failure(uuid,text)'),
   ('transition_lead(uuid,text,text,numeric,text)')
 $$, 'the server can call only the intended functions');
 
