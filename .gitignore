@@ -19,6 +19,12 @@ dist/
 *.sqlite
 *.db
 
+# Generated and tool state
+next-env.d.ts
+*.tsbuildinfo
+.vercel/
+supabase/.temp/
+
 # Editors
 .vscode/
 .idea/

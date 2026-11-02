@@ -74,7 +74,7 @@ flowchart TD
 | Notifications | Telegram Bot API | Internal team alerts |
 | Hosting | Vercel + VPS for n8n | Web app and workflow runtime |
 
-This repository starts with architecture and implementation documentation. The application code can be added in subsequent milestones.
+The application skeleton is in place. See `docs/09-team-ownership-and-delivery-plan.md` for what is being built next.
 
 ## Repository structure
 
@@ -91,7 +91,8 @@ LeadHunter-AI/
 │   ├── 05-ai-qualification.md
 │   ├── 06-integrations-and-compliance.md
 │   ├── 07-api-contracts.md
-│   └── 08-team-workflow.md
+│   ├── 08-team-workflow.md
+│   └── 09-team-ownership-and-delivery-plan.md
 ├── database/
 │   ├── README.md
 │   └── migrations/
@@ -105,9 +106,23 @@ LeadHunter-AI/
 │       └── 04-notifications-and-follow-up.md
 ├── prompts/
 │   └── lead-qualification.md
-└── src/
-    └── README.md
+├── src/
+│   └── app/
+└── .github/
+    └── workflows/
+        └── ci.yml
 ```
+
+## Local development
+
+Requires Node.js 22 or later.
+
+```bash
+npm ci
+npm run dev
+```
+
+The app runs at <http://localhost:3000>. Run `npm run check` before opening a pull request; CI runs the same lint, type check, test and build steps.
 
 ## Getting started
 
@@ -130,7 +145,7 @@ Facebook, Telegram, Reddit and LinkedIn are potential discovery channels, **not 
 
 ## Project status
 
-**Stage:** Architecture and MVP planning.
+**Stage:** Application skeleton. No product features are implemented yet.
 
 **Owner / initial deployment:** SpiritusTec internal use.
 
