@@ -1,6 +1,6 @@
 # Database
 
-The schema lives in `migrations/` and is covered by `tests/database/rules.test.sql`. Donnovan reviews and runs all SQL first, and nothing is applied to a hosted project until that is done.
+The schema lives in `migrations/`. `tests/database/rules.test.sql` covers the workflow rules, and `permissions.test.sql` checks every role against every table. Donnovan reviews and runs all SQL first, and nothing is applied to a hosted project until that is done.
 
 ## Run it locally
 
@@ -13,7 +13,7 @@ npm run db:test
 npm run db:stop
 ```
 
-`db:reset` rebuilds the local database from the migrations. `db:test` runs the tests in a transaction that is rolled back.
+`db:reset` rebuilds the local database from the migrations. `db:test` runs the tests in a transaction that is rolled back. CI runs them on every pull request too.
 
 ## How it fits together
 
